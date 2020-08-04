@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/url"
+	"os"
 	"strconv"
 
 	"github.com/ChimeraCoder/anaconda"
@@ -9,10 +10,10 @@ import (
 
 func initAnaconda() *anaconda.TwitterApi {
 	return anaconda.NewTwitterApiWithCredentials(
-		"",
-		"",
-		"",
-		"")
+		os.Getenv("ACCESS_TOKEN"),
+		os.Getenv("ACCESS_TOKEN_SECRET"),
+		os.Getenv("CONSUMER_KEY"),
+		os.Getenv("CONSUMER_KEY_SECRET"))
 }
 
 func main() {
@@ -34,7 +35,7 @@ func main() {
 		}
 
 		for _, tweet := range tweets {
-			if tweet.FavoriteCount == 0 && tweet.RetweetCount == 0  {
+			if tweet.FavoriteCount == 0 && tweet.RetweetCount == 0 {
 				api.DeleteTweet(tweet.Id, true)
 			}
 		}
